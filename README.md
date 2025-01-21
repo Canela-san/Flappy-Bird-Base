@@ -25,6 +25,7 @@ Flappy-Bird-Base/
 │   ├── pipe.py          # Classe para gerenciar os canos
 │   ├── base.py          # Classe para o chão do jogo
 │   └── utils.py         # Funções auxiliares
+├── LICENSE              # Licença MIT
 ├── README.md            # Documentação do projeto
 └── requirements.txt     # Dependências do projeto
 ```
@@ -59,7 +60,7 @@ pip install -r requirements.txt
 ## Parte de um Projeto Maior
 Este repositório é parte de um projeto maior focado no treinamento de uma IA utilizando o modelo NEAT para jogar *Flappy Bird*. A implementação da IA está disponível em outro repositório:
 
-[Flappy Bird AI](https://github.com/Canela-san/Flappy-Bird-AI) *(link a ser atualizado após publicação)*
+[Flappy Bird AI](https://github.com/Canela-san/Flappy-Bird-AI)
 
 ---
 
