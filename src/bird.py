@@ -10,21 +10,22 @@ class Bird:
         self.animation_duration = animation_duration
         self.acceleration = acceleration
         self.current_image = images[0]
+        self.image_height = self.current_image.get_height()
         self.image_count = 0
         self.angle = 0
         self.speed = 0
-        self.hight = self.y
+        self.height = self.y
         self.time = 0
         
     def jump(self):
         self.speed = self.jump_speed
-        self.hight = self.y
+        self.height = self.y
         self.time = 0
         
     def move(self):
         # calcular deslocamento
         self.time += 1
-        displacement = self.acceleration * (self.temp**2) + self.speed * self.time
+        displacement = self.acceleration * (self.time**2) + self.speed * self.time
         
         # restringir o deslocamento
         if displacement > 16:
@@ -34,7 +35,7 @@ class Bird:
         self.y += displacement
             
         # calcular angulo da imagem
-        if displacement < 0 or self.y < (self.hight + 50):
+        if displacement < 0 or self.y < (self.height + 50):
             if self.angle < self.rotation_max:
                 self.angle = self.rotation_max
             elif self.angle > -90:

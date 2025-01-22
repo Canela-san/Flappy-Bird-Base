@@ -2,25 +2,25 @@ import pygame
 import random
 
 class Pipe:
-    def __init__(self, x, pipe_between_distance, pipe_speed, base_pipe_image, pipe_hight_max, pipe_hight_min):
+    def __init__(self, x, pipe_y_distance, pipe_speed, base_pipe_image, pipe_height_max, pipe_height_min):
         self.x = x
-        self.pipe_between_distance = pipe_between_distance
+        self.pipe_y_distance = pipe_y_distance
         self.pipe_speed = pipe_speed
-        self.hight = 0
+        self.height = 0
         self.pos_top = 0
         self.pos_base = 0
         self.top_pipe_image = pygame.transform.flip(base_pipe_image, False, True)
         self.base_pipe_image = base_pipe_image
         self.passed = False
-        self.pipe_hight_max = pipe_hight_max
-        self.pipe_hight_min = pipe_hight_min 
-        self.define_hight()
+        self.pipe_height_max = pipe_height_max
+        self.pipe_height_min = pipe_height_min 
+        self.define_height()
         
         
-    def define_hight(self):
-        self.hight=random.randrange(self.pipe_hight_max, self.pipe_hight_min)
-        self.pos_top = self.hight - self.top_pipe_image.get_hight()
-        self.pos_base = self.hight + self.pipe_between_distance
+    def define_height(self):
+        self.height=random.randrange(self.pipe_height_max, self.pipe_height_min)
+        self.pos_top = self.height - self.top_pipe_image.get_height()
+        self.pos_base = self.height + self.pipe_y_distance
     
     def move(self):
         self.x -= self.pipe_speed

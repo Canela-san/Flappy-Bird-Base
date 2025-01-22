@@ -1,12 +1,11 @@
 import pygame
 import os
-import random
 
 import pygame.display
 import config
-import bird
-import pipe
-import base
+import bird as libbird
+import pipe as libpipe
+import base as libbase
 
 
 
@@ -55,7 +54,7 @@ def drawscreen(screen, birds, pipes, base, score):
         
 def main():
     birds = [
-        bird.Bird(
+        libbird.Bird(
             x=config.bird_position_x,
             y=config.bird_position_y,
             images=bird_image,
@@ -67,17 +66,17 @@ def main():
             )]
     
     pipes = [
-        pipe.Pipe(
-            x=config.pipe_position_x,
-            pipe_between_distance=config.pipe_between_distance,
+        libpipe.Pipe(
+            x=config.pipe_x_distance + 100,
+            pipe_y_distance=config.pipe_y_distance,
             pipe_speed=config.pipe_speed,
             base_pipe_image=pipe_image,
-            pipe_hight_max=config.pipe_hight_max,
-            pipe_hight_min=config.pipe_hight_min
+            pipe_height_max=config.pipe_height_max,
+            pipe_height_min=config.pipe_height_min
             )
     ]
     
-    base = base.Base(
+    base = libbase.Base(
         y = config.base_y,
         base_image = base_image,
         base_speed = config.base_speed
@@ -90,7 +89,6 @@ def main():
     running = True
     while running:
         clock.tick(config.fps)
-        drawscreen(screen=screen, birds=birds, pipes=pipes, base=base, score=score)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -105,7 +103,40 @@ def main():
             bird.move()
         base.move()
         
+        remove_pipes = []
         add_pipe = False
-        for pipe in pipes:
-            pipe.move()
         
+        for pipe in pipes:
+            for i, bird in enumerate(birds):
+                if pipe.colide(bird):
+                    birds.pop(i)
+                if not pipe.passed and config.bird_position_x > pipe.x:
+                    pipe.passed = True
+                    add_pipe = True
+            pipe.move()
+            if pipe.x + pipe.top_pipe_image.get_width() < 0:
+                remove_pipes.append(pipe)
+
+        if add_pipe:
+            score += 1
+            pipes.append(libpipe.Pipe(
+            x=config.pipe_x_distance,
+            pipe_y_distance=config.pipe_y_distance,
+            pipe_speed=config.pipe_speed,
+            base_pipe_image=pipe_image,
+            pipe_height_max=config.pipe_height_max,
+            pipe_height_min=config.pipe_height_min
+            )) 
+        if remove_pipes:
+            for pipe in remove_pipes:
+                pipes.remove(pipe)
+
+        for i, bird in enumerate(birds):
+            if bird.y + bird.image_height > base.y or bird.y < 0:
+                birds.pop(i)
+        
+        
+        drawscreen(screen=screen, birds=birds, pipes=pipes, base=base, score=score)
+        
+if __name__ == '__main__':
+    main()

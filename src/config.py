@@ -21,10 +21,11 @@ bird_position_x = 230
 bird_position_y = 350
 
 # Cano
-pipe_between_distance = 200
+pipe_x_distance = 600
+pipe_y_distance = 400
 pipe_speed = 5
-pipe_hight_max = 50
-pipe_hight_min = 450
+pipe_height_max = 50
+pipe_height_min = 450
 
 # Base
 base_speed = 5
