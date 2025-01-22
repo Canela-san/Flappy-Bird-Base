@@ -60,6 +60,7 @@ def main():
             images=bird_image,
             jump_speed=config.bird_jump_speed,
             rotation_max=config.bird_rotation_max,
+            rotation_min=config.bird_rotation_min,
             rotation_speed=config.bird_rotation_speed,
             animation_duration=config.bird_animation_duration,
             acceleration=config.bird_acceleration
@@ -111,14 +112,15 @@ def main():
                 if pipe.colide(bird):
                     birds.pop(i)
                 if not pipe.passed and config.bird_position_x > pipe.x:
-                    pipe.passed = True
-                    add_pipe = True
+                    score += 1        
+            if not pipe.passed and config.bird_position_x > pipe.x:
+                pipe.passed = True
+                add_pipe = True
             pipe.move()
             if pipe.x + pipe.top_pipe_image.get_width() < 0:
                 remove_pipes.append(pipe)
-
+        
         if add_pipe:
-            score += 1
             pipes.append(libpipe.Pipe(
             x=config.pipe_x_distance,
             pipe_y_distance=config.pipe_y_distance,
