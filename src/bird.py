@@ -1,8 +1,8 @@
 import pygame
 class Bird:
-    def __init__(self, x, y, images, jump_speed, rotation_max, rotation_min, rotation_speed, animation_duration, acceleration):
-        self.x = x
-        self.y = y
+    def __init__(self, position_x, position_y, images, jump_speed, rotation_max, rotation_min, rotation_speed, animation_duration, acceleration):
+        self.x = position_x
+        self.y = position_y
         self.images = images
         self.jump_speed = jump_speed
         self.rotation_max = rotation_max

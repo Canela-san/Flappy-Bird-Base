@@ -9,6 +9,15 @@ import base as libbase
 
 
 
+# Instâncias das configurações
+game_config = config.GameConfig()
+font_config = config.FontConfig()
+bird_config = config.BirdConfig()
+pipe_config = config.PipeConfig()
+base_config = config.BaseConfig()
+
+
+
 # Diretório base do projeto
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # Sobe um nível do 'src/'
 
@@ -27,7 +36,7 @@ bird_image = [
 
 #Importando a fonte
 pygame.font.init()
-score_font = pygame.font.SysFont(config.font_style, config.font_size)
+score_font = pygame.font.SysFont(font_config.style, font_config.size)
 
 def drawscreen(screen, birds, pipes, base, score):
     
@@ -47,7 +56,7 @@ def drawscreen(screen, birds, pipes, base, score):
         
     # Desenhando a pontuação
     text = score_font.render(str(score), True, (255, 255, 255))
-    screen.blit(text, (config.SCREEN_WIDTH - 10 - text.get_width(), 10))
+    screen.blit(text, (game_config.screen_width - 10 - text.get_width(), 10))
     
     # Atualizando a tela
     pygame.display.update()
@@ -55,41 +64,29 @@ def drawscreen(screen, birds, pipes, base, score):
 def main():
     birds = [
         libbird.Bird(
-            x=config.bird_position_x,
-            y=config.bird_position_y,
+            **bird_config.to_dict(),
             images=bird_image,
-            jump_speed=config.bird_jump_speed,
-            rotation_max=config.bird_rotation_max,
-            rotation_min=config.bird_rotation_min,
-            rotation_speed=config.bird_rotation_speed,
-            animation_duration=config.bird_animation_duration,
-            acceleration=config.bird_acceleration
             )]
     
     pipes = [
         libpipe.Pipe(
-            x=config.pipe_x_distance + 100,
-            pipe_y_distance=config.pipe_y_distance,
-            pipe_speed=config.pipe_speed,
+            **pipe_config.to_dict(),
             base_pipe_image=pipe_image,
-            pipe_height_max=config.pipe_height_max,
-            pipe_height_min=config.pipe_height_min
             )
     ]
     
     base = libbase.Base(
-        y = config.base_y,
-        base_image = base_image,
-        base_speed = config.base_speed
+        **base_config.to_dict(),
+        base_image = base_image
         )
     
-    screen = pygame.display.set_mode((config.SCREEN_WIDTH, config.SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((game_config.screen_width, game_config.screen_height))
     score = 0
     clock = pygame.time.Clock()
     
     running = True
     while running:
-        clock.tick(config.fps)
+        clock.tick(game_config.fps)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -111,9 +108,9 @@ def main():
             for i, bird in enumerate(birds):
                 if pipe.colide(bird):
                     birds.pop(i)
-                if not pipe.passed and config.bird_position_x > pipe.x:
+                if not pipe.passed and bird_config.position_x > pipe.x:
                     score += 1        
-            if not pipe.passed and config.bird_position_x > pipe.x:
+            if not pipe.passed and bird_config.position_x > pipe.x:
                 pipe.passed = True
                 add_pipe = True
             pipe.move()
@@ -122,12 +119,8 @@ def main():
         
         if add_pipe:
             pipes.append(libpipe.Pipe(
-            x=config.pipe_x_distance,
-            pipe_y_distance=config.pipe_y_distance,
-            pipe_speed=config.pipe_speed,
+            **pipe_config.to_dict(),
             base_pipe_image=pipe_image,
-            pipe_height_max=config.pipe_height_max,
-            pipe_height_min=config.pipe_height_min
             )) 
         if remove_pipes:
             for pipe in remove_pipes:

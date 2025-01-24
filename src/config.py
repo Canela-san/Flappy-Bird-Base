@@ -1,33 +1,69 @@
-# config.py
+from dataclasses import dataclass, asdict
 
-# Game config
+# Configuração geral do jogo
+@dataclass
+class GameConfig:
+    screen_width: int = 500
+    screen_height: int = 800
+    fps: int = 30
+    
+    def to_dict(self):
+        """Converte as configurações em um dicionário."""
+        return asdict(self)
 
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 800
-fps = 30
+# Configuração da fonte
+@dataclass
+class FontConfig:
+    style: str = "arial"
+    size: int = 50
 
-# Fonte do texto
-font_style = 'arial'
-font_size = 50
+    def to_dict(self):
+        """Converte as configurações em um dicionário."""
+        return asdict(self)
 
-# Configuração do Pássaro
-bird_transform_size = 2
-bird_rotation_max = 30 #25
-bird_rotation_min = -80 #25
-bird_rotation_speed = 7 #20
-bird_animation_duration = 5
-bird_jump_speed = -10.5 #tem que ser negativo
-bird_acceleration = 1.5
-bird_position_x = 230
-bird_position_y = 350
+# Configuração do pássaro
+@dataclass
+class BirdConfig:
+    # transform_size: int = 2
+    rotation_max: int = 30  # Antes: 25
+    rotation_min: int = -70  # Antes: 25
+    rotation_speed: int = 7  # Antes: 20
+    animation_duration: int = 5
+    jump_speed: float = -10.5  # Deve ser negativo
+    acceleration: float = 1.5
+    position_x: int = 230
+    position_y: int = 350
+    
+    def to_dict(self):
+        """Converte as configurações em um dicionário."""
+        return asdict(self)
 
-# Cano
-pipe_x_distance = 600
-pipe_y_distance = 400 #200
-pipe_speed = 5
-pipe_height_max = 50
-pipe_height_min = 450
+# Configuração dos canos
+@dataclass
+class PipeConfig:
+    x_distance: int = 600
+    y_distance: int = 400  # Antes: 200
+    speed: int = 5
+    height_max: int = 50
+    height_min: int = 450
+    
+    def to_dict(self):
+        """Converte as configurações em um dicionário."""
+        return asdict(self)
 
-# Base
-base_speed = 5
-base_y = 730
+# Configuração da base
+@dataclass
+class BaseConfig:
+    speed: int = 5
+    position_y: int = 730
+    
+    def to_dict(self):
+        """Converte as configurações em um dicionário."""
+        return asdict(self)
+
+# Instâncias das configurações
+# game_config = GameConfig()
+# font_config = FontConfig()
+# bird_config = BirdConfig()
+# pipe_config = PipeConfig()
+# base_config = BaseConfig()
