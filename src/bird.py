@@ -17,6 +17,7 @@ class Bird:
         self.speed = 0
         self.height = self.y
         self.time = 0
+        self.score = 0
         
     def jump(self):
         self.speed = self.jump_speed
@@ -81,3 +82,4 @@ class Bird:
         
     def get_mask(self):
         return pygame.mask.from_surface(self.current_image)
+

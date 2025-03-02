@@ -61,9 +61,3 @@ class BaseConfig:
         """Converte as configurações em um dicionário."""
         return asdict(self)
 
-# Instâncias das configurações
-# game_config = GameConfig()
-# font_config = FontConfig()
-# bird_config = BirdConfig()
-# pipe_config = PipeConfig()
-# base_config = BaseConfig()

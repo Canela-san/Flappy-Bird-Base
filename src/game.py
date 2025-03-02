@@ -3,9 +3,10 @@ import os
 
 import pygame.display
 import config
-import bird as libbird
-import pipe as libpipe
-import base as libbase
+from bird import Bird
+from pipe import Pipe
+from base import Base
+from event_handler import handle_events
 
 
 
@@ -60,22 +61,25 @@ def drawscreen(screen, birds, pipes, base, score):
     
     # Atualizando a tela
     pygame.display.update()
-        
+    
+    
+    
+    
 def main():
     birds = [
-        libbird.Bird(
+        Bird(
             **bird_config.to_dict(),
             images=bird_image,
             )]
     
     pipes = [
-        libpipe.Pipe(
+        Pipe(
             **pipe_config.to_dict(),
             base_pipe_image=pipe_image,
             )
     ]
     
-    base = libbase.Base(
+    base = Base(
         **base_config.to_dict(),
         base_image = base_image
         )
@@ -88,14 +92,7 @@ def main():
     while running:
         clock.tick(game_config.fps)
         
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                pygame.quit()
-                quit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                for bird in birds:
-                    bird.jump()
+        handle_events(birds)
 
         for bird in birds:
             bird.move()
@@ -109,7 +106,8 @@ def main():
                 if pipe.colide(bird):
                     birds.pop(i)
                 if not pipe.passed and bird_config.position_x > pipe.x:
-                    score += 1        
+                    bird.score += 1
+                    score = bird.score        
             if not pipe.passed and bird_config.position_x > pipe.x:
                 pipe.passed = True
                 add_pipe = True
@@ -118,7 +116,7 @@ def main():
                 remove_pipes.append(pipe)
         
         if add_pipe:
-            pipes.append(libpipe.Pipe(
+            pipes.append(Pipe(
             **pipe_config.to_dict(),
             base_pipe_image=pipe_image,
             )) 

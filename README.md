@@ -23,8 +23,7 @@ Flappy-Bird-Base/
 │   ├── game.py          # Arquivo principal para executar o jogo
 │   ├── bird.py          # Classe para controlar o pássaro
 │   ├── pipe.py          # Classe para gerenciar os canos
-│   ├── base.py          # Classe para o chão do jogo
-│   └── utils.py         # Funções auxiliares
+│   └── base.py          # Classe para o chão do jogo
 ├── LICENSE              # Licença MIT
 ├── README.md            # Documentação do projeto
 └── requirements.txt     # Dependências do projeto
